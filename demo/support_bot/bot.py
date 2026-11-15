@@ -94,6 +94,20 @@ def save_lead(lead: Lead) -> None:
         w.writerow([lead.created_at, lead.status, lead.user_id, lead.name, lead.contact, lead.text])
 
 
+INCOMING_LOG = os.environ.get("INCOMING_LOG", "incoming.log")
+
+
+def _log_update(update: Update) -> None:
+    m = update.effective_message
+    if m is None or m.text is None:
+        return
+    u = update.effective_user
+    with open(INCOMING_LOG, "a", encoding="utf-8") as fh:
+        fh.write("%s | chat_id=%s | user_id=%s | @%s | %s\n" % (
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            update.effective_chat.id, u.id, u.username or "-", m.text.replace("\n", " ")))
+
+
 def detect(text: str) -> str:
     t = text.lower()
     for key, words in KEYWORDS.items():
@@ -109,6 +123,7 @@ def looks_like_lead(text: str) -> bool:
 
 
 async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    _log_update(update)
     await update.message.reply_text(REPLIES["hello"])
 
 
@@ -149,6 +164,7 @@ async def lead_contact(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
 
 async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    _log_update(update)
     text = update.message.text or ""
     user = update.effective_user
     key = detect(text)
