@@ -25,6 +25,7 @@
 https://igor-dev-services-dgu5m087.agent.mira.tg
 
 Если заявки сейчас теряются — напишите, разберём за 5 минут, что делать.
+Вопросы можно написать боту: @Feoklistov84bot — отвечает сразу и без выходных.
 ```
 
 ## Пост 2 — чат `Одесса Бизнес и возможности` (`@works_od`) и `Digital Топчик Одессы`
@@ -36,6 +37,8 @@ https://igor-dev-services-dgu5m087.agent.mira.tg
 
 Примеры кода:
 https://github.com/ztfvpzz2ks-wq/igor-dev
+
+Вопросы — боту: @Feoklistov84bot, отвечает сразу.
 ```
 
 ## Пост 3 — чат `Odessa Event` (`odessa2event`)
@@ -47,6 +50,8 @@ https://github.com/ztfvpzz2ks-wq/igor-dev
 
 За день. От $60. Демо:
 https://igor-dev-services-dgu5m087.agent.mira.tg
+
+Вопросы — боту: @Feoklistov84bot, отвечает сразу.
 ```
 
 ---
