@@ -65,6 +65,7 @@ REPLIES = {
 }
 
 KEYWORDS = {
+    "hello": ["start", "начать", "старт", "привет", "здравствуй", "hello", "hi", "hey"],
     "price": ["сколько стоит", "стоимость", "цена", "цены", "прайс", "price", "cost", "how much"],
     "demo": ["демо", "пример", "посмотреть", "код", "demo", "example", "portfolio"],
     "timeline": ["сколько дней", "срок", "когда сделаете", "deadline", "how long", "timeline"],
@@ -119,6 +120,8 @@ def detect(text: str) -> str:
 
 def looks_like_lead(text: str) -> bool:
     t = text.lower()
+    if detect(t) == "hello":
+        return False
     return any(w in t for w in LEAD_WORDS)
 
 
