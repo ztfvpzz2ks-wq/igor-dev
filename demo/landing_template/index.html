@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Услуга — заголовок</title>
+<style>
+  :root{--bg:#0f1220;--card:#181c30;--accent:#5b8cff;--text:#eef1ff;--muted:#9aa3c7}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  header{padding:64px 0 40px;text-align:center}
+  h1{font-size:clamp(28px,5vw,44px);margin:0 0 14px;line-height:1.15}
+  .sub{color:var(--muted);font-size:18px;margin:0 auto 28px;max-width:620px}
+  .btn{display:inline-block;padding:14px 28px;border-radius:12px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
+  section{padding:44px 0}
+  h2{font-size:26px;margin:0 0 20px}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{background:var(--card);border-radius:16px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:18px}
+  .card p{margin:0;color:var(--muted)}
+  .price{font-size:34px;font-weight:700;margin:6px 0 4px}
+  form{display:grid;gap:12px;max-width:460px}
+  input,textarea{padding:13px 14px;border-radius:10px;border:1px solid #2b3152;background:#12162a;color:var(--text);font:inherit}
+  textarea{min-height:110px;resize:vertical}
+  button{padding:14px;border:0;border-radius:12px;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+  .ok{display:none;padding:14px;border-radius:10px;background:#12351f;border:1px solid #2b6b3d;color:#b6f5c8}
+  footer{padding:34px 0;color:var(--muted);text-align:center;border-top:1px solid #232845}
+  @media(max-width:600px){header{padding:44px 0 26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Заголовок услуги в одну строку</h1>
+    <p class="sub">Короткое описание: что вы делаете и почему это удобно клиенту. Две строки максимум.</p>
+    <a class="btn" href="#form">Оставить заявку</a>
+  </header>
+
+  <section>
+    <h2>Что вы получаете</h2>
+    <div class="grid">
+      <div class="card"><h3>Пункт 1</h3><p>Что именно входит и что клиент получит в итоге.</p></div>
+      <div class="card"><h3>Пункт 2</h3><p>Конкретика: сроки, формат, что нужно от клиента.</p></div>
+      <div class="card"><h3>Пункт 3</h3><p>Гарантия, поддержка после сдачи, правки.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Цены</h2>
+    <div class="grid">
+      <div class="card"><h3>База</h3><div class="price">$40</div><p>Что входит в минимальный пакет.</p></div>
+      <div class="card"><h3>Стандарт</h3><div class="price">$80</div><p>Что добавляется к базовому пакету.</p></div>
+      <div class="card"><h3>Под ключ</h3><div class="price">$120</div><p>Полный комплект, приоритет, поддержка.</p></div>
+    </div>
+  </section>
+
+  <section id="form">
+    <h2>Оставить заявку</h2>
+    <form id="lead">
+      <input name="name" placeholder="Как вас зовут" required>
+      <input name="contact" placeholder="Telegram, телефон или почта" required>
+      <textarea name="comment" placeholder="Что нужно сделать"></textarea>
+      <button type="submit">Отправить</button>
+      <div class="ok" id="ok">Заявка отправлена — отвечу в течение дня.</div>
+    </form>
+  </section>
+
+  <footer>Контакты и мелкие ссылки сюда</footer>
+</div>
+
+<script>
+const BOT_TOKEN = '123456:ABC-your-token';
+const CHAT_ID = '000000000';
+
+document.getElementById('lead').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const text = [
+    'Новая заявка с сайта',
+    'Имя: ' + f.get('name'),
+    'Контакт: ' + f.get('contact'),
+    'Комментарий: ' + (f.get('comment') || '—')
+  ].join('\n');
+
+  await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: CHAT_ID, text: text })
+  });
+
+  e.target.reset();
+  document.getElementById('ok').style.display = 'block';
+});
+</script>
+</body>
+</html>
