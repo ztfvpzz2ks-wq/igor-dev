@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Игорь — Telegram-боты, лендинги и парсеры цен | Фиксированная цена, чистый Python</title>
+<meta name="description" content="Разработка Telegram-ботов, парсеров цен и лендингов. Фиксированная цена до начала работы, исходники и README входят в передачу. Одесса — работаю удалённо.">
+<meta property="og:title" content="Игорь — Telegram-боты, лендинги и парсеры цен">
+<meta property="og:description" content="Фиксированная цена, чистый Python, исходники ваши. Боты, парсеры, админ-панели, лендинги.">
+<meta property="og:type" content="website">
+<style>
+:root{--bg:#0b1220;--card:#111c31;--line:#1e2d47;--tx:#e8eefc;--mu:#93a4c4;--acc:#4da3ff;--acc2:#7de2c8;--warn:#ffb454}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:64px 0 44px;border-bottom:1px solid var(--line);background:radial-gradient(900px 380px at 12% -10%,rgba(77,163,255,.18),transparent 70%),radial-gradient(700px 300px at 95% 0%,rgba(125,226,200,.13),transparent 70%)}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(125,226,200,.35);background:rgba(125,226,200,.08);color:var(--acc2);padding:6px 13px;border-radius:99px;font-size:13px;font-weight:600}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--acc2);box-shadow:0 0 0 3px rgba(125,226,200,.18)}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.12;margin:18px 0 14px;letter-spacing:-.02em}
+h1 span{color:var(--acc)}
+.lead{color:var(--mu);font-size:18px;max-width:74ch;margin:0 0 26px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px}
+.btn{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid transparent}
+.btn-p{background:var(--acc);color:#04101f}
+.btn-s{background:transparent;color:var(--tx);border-color:var(--line)}
+.btn-s:hover{border-color:var(--acc)}
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+h2{font-size:clamp(23px,3.4vw,31px);margin:0 0 8px;letter-spacing:-.01em}
+.sub{color:var(--mu);margin:0 0 30px;max-width:70ch}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(285px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.card h3{margin:0 0 10px;font-size:19px}
+.card p{color:var(--mu);margin:0 0 14px;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.tag{font-size:12px;color:var(--mu);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+.price{display:block;color:var(--acc2);font-weight:700;margin-top:auto}
+.lnk{color:var(--acc);text-decoration:none;font-weight:600;font-size:14px}
+.lnk:hover{text-decoration:underline}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px;max-width:760px}
+.steps li{counter-increment:s;position:relative;padding:14px 18px 14px 56px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.steps li:before{content:counter(s);position:absolute;left:16px;top:14px;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#04101f;font-weight:700;display:grid;place-items:center;font-size:14px}
+.steps strong{display:block;margin-bottom:2px}
+.steps span{color:var(--mu);font-size:15px}
+table{width:100%;border-collapse:collapse;max-width:760px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:15px}
+th{color:var(--mu);font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+td:last-child,th:last-child{text-align:right;font-weight:700;color:var(--acc2);white-space:nowrap}
+.qa{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.qa div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.qa h4{margin:0 0 8px;font-size:16px;color:var(--acc2)}
+.qa p{margin:0;color:var(--mu);font-size:15px}
+.note{background:rgba(255,180,84,.08);border:1px solid rgba(255,180,84,.3);border-radius:12px;padding:16px 18px;color:#ffd9a8;font-size:15px;margin-top:18px}
+footer{padding:40px 0 56px;color:var(--mu);font-size:15px}
+.fl{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.fl a{color:var(--tx);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:9px 15px;font-weight:600;font-size:14px}
+.fl a:hover{border-color:var(--acc);color:var(--acc)}
+@media(max-width:640px){header{padding:44px 0 34px}.price{margin-top:10px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <span class="badge"><span class="dot"></span> Беру новые проекты</span>
+  <h1>Telegram-боты, парсеры цен и лендинги — <span>фиксированная цена, чистый Python</span></h1>
+  <p class="lead">Делаю небольшие автоматизации, которые работают с первого дня: бот принимает заявки, парсер следит за ценой и пишет вам, лендинг превращает переходы в заявки. Только стандартная библиотека Python, каждый кейс открыт на GitHub, исходники и README входят в передачу.</p>
+  <div class="cta">
+   <a class="btn btn-p" href="https://t.me/mira?start=ref_7409753745">Написать в Telegram</a>
+   <a class="btn btn-s" href="https://igor-dev-demo-dgu5m087.agent.mira.tg">Потыкать живое демо</a>
+   <a class="btn btn-s" href="https://github.com/ztfvpzz2ks-wq/igor-dev">Код на GitHub</a>
+  </div>
+ </div>
+</header>
+
+<section><div class="wrap">
+ <h2>Что я делаю</h2>
+ <p class="sub">Три услуги, которые я делаю регулярно. Цена и срок фиксируются до начала работы.</p>
+ <div class="grid">
+  <div class="card"><h3>🤖 Telegram-бот на заявки</h3><p>Принимает заявки в свободной форме, сам определяет тип услуги и достаёт контакт. В комплекте веб-панель: список, поиск, смена статусов, экспорт CSV. Уведомление о заявке приходит сразу.</p><div class="tags"><span class="tag">Python</span><span class="tag">Bot API</span><span class="tag">Без зависимостей</span></div><span class="price">от $80</span><br><a class="lnk" href="https://igor-dev-demo-dgu5m087.agent.mira.tg">Живое демо →</a> &nbsp;<a class="lnk" href="https://github.com/ztfvpzz2ks-wq/igor-dev/tree/main/case5_admin_panel">Код на GitHub →</a></div>
+  <div class="card"><h3>📈 Парсер цен</h3><p>Следит за ценой на семи биржах и присылает уведомление в Telegram, когда движение превышает порог. Ваш порог, ваш источник, ваше расписание опроса.</p><div class="tags"><span class="tag">Python</span><span class="tag">7 бирж</span><span class="tag">Алерты</span></div><span class="price">от $60</span><br><a class="lnk" href="https://github.com/ztfvpzz2ks-wq/igor-dev/tree/main/case4_price_parser">Код на GitHub →</a></div>
+  <div class="card"><h3>🌐 Лендинг</h3><p>Одностраничный сайт под конкретный продукт: понятный оффер, блок «как это работает», форма заявки и кнопка в Telegram. Быстро, адаптивно, открывается на телефоне.</p><div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Адаптив</span></div><span class="price">от $40</span><br><a class="lnk" href="https://igor-dev-dgu5m087.agent.mira.tg">Живой пример →</a></div>
+ </div>
+</div></section>
+
+<section><div class="wrap">
+ <h2>Сколько это стоит</h2>
+ <p class="sub">Фиксированная цена, оговорённая заранее. После начала работы она не меняется.</p>
+ <table>
+  <tr><th>Услуга</th><th>Что входит</th><th>Цена</th></tr>
+  <tr><td>Лендинг</td><td>Одна страница, адаптив, форма заявки</td><td>$40–120</td></tr>
+  <tr><td>Telegram-бот</td><td>Приём заявок, админ-панель, уведомления</td><td>$80–200</td></tr>
+  <tr><td>Парсер цен</td><td>Источники, порог алерта, уведомления</td><td>$60–120</td></tr>
+ </table>
+ <div class="note">Как я считаю: 50% предоплата, остаток — после того, как вы приняли результат. Типовая задача — 1–3 дня. Если задача нестандартная, цену я называю до начала, а не после.</div>
+</div></section>
+
+<section><div class="wrap">
+ <h2>Как идёт работа</h2>
+ <p class="sub">Никаких «напишите ТЗ на 20 страниц». Обычно хватает двух сообщений.</p>
+ <ol class="steps">
+  <li><strong>Вы описываете задачу</strong><span>Своими словами, в Telegram — можно голосовым. Скриншот или пример в помощь.</span></li>
+  <li><strong>Вы получаете оценку</strong><span>Объём, срок и цена — до того, как что-то началось.</span></li>
+  <li><strong>Вы получаете результат</strong><span>Работающий код или готовую страницу, и всё это в открытом репозитории GitHub — качество вы оцениваете сами.</span></li>
+  <li><strong>Вы платите остаток</strong><span>50% до, 50% после того, как всё заработало. Исходники ваши с самого начала.</span></li>
+ </ol>
+</div></section>
+
+<section><div class="wrap">
+ <h2>Четыре вопроса, которые задают чаще всего</h2>
+ <div class="qa">
+  <div><h4>«А если у меня нет ТЗ?»</h4><p>Не нужно. Опишите задачу обычными словами — уточняющие вопросы и структуру предложу я сам. Чаще всего хватает двух сообщений, чтобы понять всю суть.</p></div>
+  <div><h4>«Сколько ждать?»</h4><p>Типовой бот или лендинг — 1–3 дня. Парсер с несколькими источниками — до недели. Точный срок всегда называю до оплаты.</p></div>
+  <div><h4>«Отдаёшь ли исходники?»</h4><p>Всегда, и до финальной оплаты код уже открыт на GitHub. Можно читать, проверять и забирать — вы ничем не привязаны.</p></div>
+  <div><h4>«Можешь работать на моём языке?»</h4><p>Да. Бот, панель и всё общение — на украинском, русском или английском.</p></div>
+ </div>
+</div></section>
+
+<footer><div class="wrap">
+ <strong>Игорь</strong> — Telegram-боты, лендинги и парсеры цен. Одесса, Украина. Работаю удалённо.
+ <div class="fl">
+  <a href="https://t.me/mira?start=ref_7409753745">Telegram</a>
+  <a href="https://github.com/ztfvpzz2ks-wq/igor-dev">GitHub</a>
+  <a href="https://igor-dev-demo-dgu5m087.agent.mira.tg">Живое демо</a>
+  <a href="https://igor-dev-en-services-dgu5m087.agent.mira.tg">English version</a>
+ </div>
+</div></footer>
+</body></html>
