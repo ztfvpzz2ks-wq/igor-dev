@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Demo — Telegram Lead Bot with Admin Panel</title>
+<meta name="description" content="Interactive demo: a Telegram bot that captures free-form requests and an admin panel with search, status filters and CSV export.">
+<style>
+:root{--bg:#0b1220;--card:#111c31;--line:#1e2d47;--tx:#e8eefc;--mu:#93a4c4;--acc:#4da3ff;--acc2:#7de2c8;--warn:#ffb454;--red:#ff7a7a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+header{padding:44px 0 30px;border-bottom:1px solid var(--line);background:radial-gradient(800px 300px at 8% -20%,rgba(77,163,255,.18),transparent 70%)}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(125,226,200,.35);background:rgba(125,226,200,.08);color:var(--acc2);padding:5px 12px;border-radius:99px;font-size:12.5px;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--acc2);box-shadow:0 0 0 3px rgba(125,226,200,.18);animation:p 2s infinite}
+@keyframes p{50%{opacity:.35}}
+h1{font-size:clamp(24px,4vw,36px);margin:16px 0 8px;letter-spacing:-.02em}
+h1 span{color:var(--acc)}
+.sub{color:var(--mu);margin:0 0 18px;max-width:78ch}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.chip{font-size:12.5px;color:var(--mu);border:1px solid var(--line);border-radius:7px;padding:4px 10px}
+.chip b{color:var(--tx)}
+.cols{display:grid;gap:18px;grid-template-columns:minmax(300px,380px) 1fr;align-items:start;padding:30px 0 60px}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.box h2{margin:0;padding:14px 18px;font-size:15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.box h2 small{color:var(--mu);font-weight:500;font-size:12.5px}
+.tg{background:#0d1626}
+.chat{padding:16px;height:420px;overflow:auto;display:flex;flex-direction:column;gap:9px}
+.msg{max-width:86%;padding:10px 13px;border-radius:13px;font-size:14.5px;white-space:pre-wrap;word-break:break-word}
+.msg.in{align-self:flex-start;background:#1c2b45;border-bottom-left-radius:4px}
+.msg.out{align-self:flex-end;background:linear-gradient(135deg,#2a7fd4,#4da3ff);color:#04101f;border-bottom-right-radius:4px;font-weight:500}
+.msg small{display:block;opacity:.65;font-size:11px;margin-top:4px}
+.composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.composer input{flex:1;background:#0d1626;border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--tx);font:inherit;font-size:14.5px;outline:none}
+.composer input:focus{border-color:var(--acc)}
+.btn{background:var(--acc);color:#04101f;border:0;border-radius:9px;padding:10px 16px;font-weight:700;font:inherit;font-size:14.5px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);align-items:center}
+.toolbar input{flex:1;min-width:150px;background:#0d1626;border:1px solid var(--line);border-radius:9px;padding:9px 12px;color:var(--tx);font:inherit;font-size:14.5px;outline:none}
+.toolbar input:focus{border-color:var(--acc)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+th{color:var(--mu);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;background:#0d1626}
+tr:hover td{background:rgba(77,163,255,.05)}
+.svc{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 8px;color:var(--mu);white-space:nowrap}
+select{background:#0d1626;border:1px solid var(--line);border-radius:7px;padding:4px 7px;color:var(--tx);font:inherit;font-size:12.5px}
+.status{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.st-new{background:rgba(77,163,255,.14);color:#8cc4ff}
+.st-in_progress{background:rgba(255,180,84,.14);color:#ffcd8a}
+.st-done{background:rgba(125,226,200,.14);color:var(--acc2)}
+.st-rejected{background:rgba(255,122,122,.14);color:var(--red)}
+.meta{color:var(--mu);font-size:12.5px;white-space:nowrap}
+.empty{padding:36px;text-align:center;color:var(--mu)}
+.bar{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+.stat{font-size:12.5px;color:var(--mu)}
+.stat b{color:var(--tx);font-size:15px}
+.note{padding:14px 16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--mu)}
+.note b{color:var(--tx)}
+footer{padding:26px 0 50px;color:var(--mu);font-size:14px;border-top:1px solid var(--line)}
+a{color:var(--acc)}
+.fl{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.fl a{border:1px solid var(--line);border-radius:8px;padding:8px 13px;text-decoration:none;color:var(--tx);font-weight:600;font-size:13.5px}
+.fl a:hover{border-color:var(--acc)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+ <span class="badge"><span class="dot"></span> Interactive demo — runs in your browser</span>
+ <h1>Telegram lead bot <span>with admin panel</span></h1>
+ <p class="sub">Type a request below exactly as a client would — in free form, in Ukrainian or Russian. The bot detects the service, extracts the contact, files the request and notifies the owner. Everything you see on the right happens live in your browser; the real version does the same with Telegram and a JSON file.</p>
+ <div class="chips"><span class="chip">Python <b>standard library only</b></span><span class="chip">No <b>pip install</b></span><span class="chip">RU + <b>UA</b> input</span><span class="chip">Admin panel: <b>search, statuses, CSV</b></span><span class="chip">Code: <b>public on GitHub</b></span></div>
+</div></header>
+
+<div class="wrap"><div class="cols">
+
+ <div class="box tg">
+  <h2>Telegram chat <small>@your_lead_bot</small></h2>
+  <div class="chat" id="chat"></div>
+  <div class="composer">
+   <input id="inp" placeholder="например: Нужен лендинг, @igor_dev" autocomplete="off">
+   <button class="btn" id="send">Send</button>
+  </div>
+  <div class="note">Try: <b>«Нужен лендинг под услугу, @igor_dev»</b> · <b>«Хочу парсер цен, порог 0.5%»</b> · <b>«Бот для записи, +380 67 123 45 67»</b></div>
+ </div>
+
+ <div class="box">
+  <h2>Admin panel <small>leads.json</small></h2>
+  <div class="toolbar">
+   <input id="q" placeholder="Search name, contact or text…">
+   <select id="fstatus"><option value="">All statuses</option><option value="new">new</option><option value="in_progress">in_progress</option><option value="done">done</option><option value="rejected">rejected</option></select>
+   <select id="fservice"><option value="">All services</option></select>
+   <button class="btn ghost" id="csv">Export CSV</button>
+  </div>
+  <div id="table"></div>
+  <div class="bar">
+   <span class="stat">Total <b id="tot">0</b></span>
+   <span class="stat">new <b id="s-new">0</b></span>
+   <span class="stat">in progress <b id="s-ip">0</b></span>
+   <span class="stat">done <b id="s-done">0</b></span>
+   <span class="stat">rejected <b id="s-rej">0</b></span>
+   <span class="stat" style="margin-left:auto">Change a status right in the table</span>
+  </div>
+ </div>
+
+</div></div>
+
+<footer><div class="wrap">
+ <strong>Igor</strong> — Telegram bots, price parsers, landing pages. Odessa, Ukraine.
+ <div class="fl">
+  <a href="https://github.com/ztfvpzz2ks-wq/igor-dev/tree/main/case5_admin_panel">Code on GitHub</a>
+  <a href="https://t.me/mira?start=ref_7409753745">Telegram</a>
+  <a href="https://igor-dev-en-services-dgu5m087.agent.mira.tg">Services &amp; prices</a>
+ </div>
+</div></footer>
+
+<script>
+const LEADS = [{"d": "2026-11-16 09:02", "ru": "Нужен лендинг под услугу, @igor_dev", "en": "Need a landing page for my service, @igor_dev", "n": "Наталья", "en2": "Natalia", "service": "landing-page", "contact": "@igor_dev", "status": "new"}, {"d": "2026-11-16 08:15", "ru": "Хочу бот для записи клиентов, тел +380 67 123 45 67", "en": "Want a booking bot for clients, phone +380 67 123 45 67", "n": "Сергей", "en2": "Serhii", "service": "telegram-bot", "contact": "+380 67 123 45 67", "status": "in_progress"}, {"d": "2026-11-16 07:28", "ru": "Парсер цен с CoinGecko, порог 0.5%, писать в @igor_dev", "en": "Price parser with CoinGecko, 0.5% threshold, notify @igor_dev", "n": "Дмитрий", "en2": "Dmytro", "service": "price-parser", "contact": "@igor_dev", "status": "new"}, {"d": "2026-11-16 06:41", "ru": "Нужна админ-панель для лидов, ссылка https://example.com/leads", "en": "Need an admin panel for leads, link https://example.com/leads", "n": "Ирина", "en2": "Iryna", "service": "admin-panel", "contact": "https://example.com/leads", "status": "new"}, {"d": "2026-11-16 05:54", "ru": "Сделайте лендинг для ремонта квартир, @olga_repair", "en": "Build a landing page for apartment renovation, @olga_repair", "n": "Андрей", "en2": "Andrii", "service": "landing-page", "contact": "@olga_repair", "status": "in_progress"}, {"d": "2026-11-16 05:07", "ru": "Бот для отзывов, отправлять на info@example.com", "en": "Bot for collecting reviews, send to info@example.com", "n": "Марина", "en2": "Maryna", "service": "telegram-bot", "contact": "@example", "status": "done"}, {"d": "2026-11-16 04:20", "ru": "Лендинг для SaaS сервиса, нужен тёмный дизайн", "en": "Landing page for a SaaS service, dark design needed", "n": "Павел", "en2": "Pavlo", "service": "landing-page", "contact": "—", "status": "done"}, {"d": "2026-11-16 03:33", "ru": "Хочу парсер с 3 бирж, уведомления в Telegram @mira_trade", "en": "Want a parser for 3 exchanges, Telegram alerts @mira_trade", "n": "Юлия", "en2": "Yuliia", "service": "price-parser", "contact": "@mira_trade", "status": "in_progress"}, {"d": "2026-11-16 02:46", "ru": "Админ-панель для заявок с лендинга, @olga_repair", "en": "Admin panel for requests coming from a landing page, @olga_repair", "n": "Артём", "en2": "Artem", "service": "admin-panel", "contact": "@olga_repair", "status": "rejected"}, {"d": "2026-11-16 01:59", "ru": "Бот-парсер цен для кафе, уведомлять @mira_trade", "en": "Bot price parser for a cafe, notify @mira_trade", "n": "Виктория", "en2": "Viktoriia", "service": "price-parser", "contact": "@mira_trade", "status": "new"}, {"d": "2026-11-16 01:12", "ru": "Лендинг для курсов английского, @igor_dev", "en": "Landing page for English courses, @igor_dev", "n": "Роман", "en2": "Roman", "service": "price-parser", "contact": "@igor_dev", "status": "new"}];
+const chat=document.getElementById('chat'), table=document.getElementById('table');
+let leads=LEADS.map(l=>({...l}));
+
+function norm(s){const m={'і':'и','ї':'и','є':'е','ґ':'г','І':'И','Ї':'И','Є':'Е','Ґ':'Г'};return [...s].map(c=>m[c]||c).join('').toLowerCase()}
+function detect(t){t=norm(t);
+ if(/парсер|цен|бирж|coin|курс/.test(t))return'price-parser';
+ if(/админ|панел|лид/.test(t))return'admin-panel';
+ if(/бот|запис|заявк|отзыв|рассылк/.test(t))return'telegram-bot';
+ if(/лендинг|сайт|страниц|дизайн/.test(t))return'landing-page';
+ return'other'}
+function contactOf(t){let m=t.match(/@([A-Za-z0-9_]+)/);if(m)return'@'+m[1];
+ m=t.match(/\+?\d[\d\s()\-]{7,}/);if(m)return m[0].trim();
+ m=t.match(/https?:\/\/\S+/);if(m)return m[0];
+ return'—'}
+const SVC={'price-parser':'Price parser','admin-panel':'Admin panel','telegram-bot':'Telegram bot','landing-page':'Landing page','other':'Other'};
+const ST={new:'st-new','in_progress':'st-in_progress',done:'st-done',rejected:'st-rejected'};
+
+function addMsg(txt,out,note){const d=document.createElement('div');d.className='msg '+(out?'out':'in');
+ d.textContent=txt;if(note){const s=document.createElement('small');s.textContent=note;d.appendChild(s)}
+ chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
+
+function reply(t){
+ if(/прив|hello|hi|начать|start|привіт/i.test(norm(t))){
+   return{text:"Привіт! 👋 Опишите задачу — например: «нужен лендинг под услугу, @имя». Я определю услугу, достану контакт и передам заявку владельцу.",done:false}
+ }
+ const svc=detect(t), c=contactOf(t);
+ if(c==='—') return{text:"Понял задачу 👍 Оставьте контакт (телефон, @username или ссылку), и я отправлю заявку владельцу.",done:false}
+ return{text:`Заявка принята ✅\n\nУслуга: ${SVC[svc]}\nКонтакт: ${c}\nВладельцу отправлено уведомление.`,done:true,svc,contact:c}
+}
+
+function render(){
+ const q=document.getElementById('q').value.toLowerCase();
+ const fs=document.getElementById('fstatus').value, fsv=document.getElementById('fservice').value;
+ const rows=leads.filter(l=>(!q||(l.name+' '+l.contact+' '+l.text).toLowerCase().includes(q))&&(!fs||l.status===fs)&&(!fsv||l.service===fsv));
+ const svcSel=document.getElementById('fservice');
+ const services=[...new Set(leads.map(l=>l.service))];
+ const cur=svcSel.value;
+ svcSel.innerHTML='<option value="">All services</option>'+services.map(s=>`<option value="${s}">${SVC[s]}</option>`).join('');
+ svcSel.value=services.includes(cur)?cur:'';
+ if(!rows.length){table.innerHTML='<div class="empty">Nothing found</div>'}
+ else{
+  table.innerHTML='<table><thead><tr><th>When</th><th>Name</th><th>Contact</th><th>Service</th><th>Request</th><th>Status</th></tr></thead><tbody>'+
+  rows.map(l=>`<tr><td class="meta">${l.d}</td><td><b>${l.name}</b></td><td class="meta">${l.contact}</td><td><span class="svc">${SVC[l.service]}</span></td><td>${l.text}</td><td><select class="st" data-id="${l.id}">${Object.keys(ST).map(s=>`<option value="${s}" ${l.status===s?'selected':''}>${s}</option>`).join('')}</select></td></tr>`).join('')+
+  '</tbody></table>';
+  table.querySelectorAll('select.st').forEach(s=>s.onchange=()=>{const l=leads.find(x=>x.id==s.dataset.id);l.status=s.value;render()});
+ }
+ const c=s=>leads.filter(l=>l.status===s).length;
+ document.getElementById('tot').textContent=leads.length;
+ document.getElementById('s-new').textContent=c('new');
+ document.getElementById('s-ip').textContent=c('in_progress');
+ document.getElementById('s-done').textContent=c('done');
+ document.getElementById('s-rej').textContent=c('rejected');
+}
+
+document.getElementById('send').onclick=send;
+document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+function send(){
+ const inp=document.getElementById('inp'), t=inp.value.trim();
+ if(!t)return; inp.value='';
+ addMsg(t,true);
+ const r=reply(t);
+ setTimeout(()=>{
+  addMsg(r.text,false);
+  if(r.done){
+   const now=new Date();
+   const pad=n=>String(n).padStart(2,'0');
+   const d=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+   leads.unshift({id:Date.now(),d, name:'Новая заявка',contact:r.contact,service:r.svc,text:t,status:'new'});
+   addMsg('🔔 Уведомление владельцу: новая заявка в панели',false);
+   render();
+  }
+ },650);
+}
+
+document.getElementById('q').oninput=render;
+document.getElementById('fstatus').onchange=render;
+document.getElementById('fservice').onchange=render;
+document.getElementById('csv').onclick=()=>{
+ const head=['created_at','name','contact','service','text','status'];
+ const esc=v=>`"${String(v).replace(/"/g,'""')}"`;
+ const csv=[head.join(','),...leads.map(l=>head.map(h=>esc(l[h==='created_at'?'d':h])).join(','))].join('\n');
+ const blob=new Blob([csv],{type:'text/csv'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='leads.csv';a.click();
+};
+
+addMsg('Привіт! 👋 Опишите задачу — например: «нужен лендинг под услугу, @имя». Я определю услугу, достану контакт и передам заявку владельцу.',false);
+render();
+</script>
+</body></html>
