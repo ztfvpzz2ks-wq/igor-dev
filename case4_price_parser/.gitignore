@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+parser.log
+run.log
+last_price.json
