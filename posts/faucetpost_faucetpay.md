@@ -16,6 +16,7 @@ FaucetPay: 2,8 млн кошельков, 612 кранов внутри, 300+ м
 
 Ссылка (мой реферальный код — до 50% с PTC-дохода приглашённых):
 https://faucetpay.io/r/9594724
+https://t.me/faucetpay/FaucetPay?startapp=9623655
 
 Как это стыкуется: FaucetWorld → выплата в FaucetPay → оттуда уже выводишь в сеть или тратишь.
 
