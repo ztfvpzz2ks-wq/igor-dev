@@ -1,0 +1,26 @@
+# Profile photo / avatar — options
+
+Tell me which one and I generate it:
+
+**A. Logo-style avatar**
+Monogram "IF" on a deep-blue gradient circle, minimal, flat, no photo.
+
+**B. Abstract developer avatar**
+Abstract geometric figure in deep blue and cyan, technical grid feel, no face.
+
+**C. Your photo, cleaned up**
+If you send a portrait photo: I will put it on a soft dark-blue background,
+improve the lighting, crop it square for the Upwork avatar, and make a wide
+version for the portfolio site header. This is the option that converts best —
+clients hire people, not logos.
+
+## Sizes needed
+- Upwork avatar: square, at least 250x250
+- Fiverr: square 800x800
+- Portfolio site header: wide 3:2
+
+## Prompt for option A (already tested style)
+
+Minimal flat monogram avatar, the letters "IF" in clean geometric sans-serif,
+deep blue to cyan gradient circle background, crisp edges, centered,
+no extra text, no outline, app-icon style, 1:1
