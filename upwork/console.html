@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Upwork — консоль: профиль и отклики</title>
+<meta name="description" content="Готовые тексты профиля Upwork и 5 откликов с кнопкой копирования.">
+<style>
+:root{--bg:#0b1220;--card:#111c31;--line:#1e2d47;--tx:#e8eefc;--mu:#93a4c4;--acc:#4da3ff;--acc2:#7de2c8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header{padding:44px 0 26px;border-bottom:1px solid var(--line);background:radial-gradient(800px 300px at 10% -20%,rgba(77,163,255,.18),transparent 70%)}
+h1{margin:0 0 8px;font-size:clamp(22px,4vw,32px);letter-spacing:-.02em}
+h1 span{color:var(--acc)}
+.lead{color:var(--mu);margin:0 0 18px}
+.sec{padding:32px 0}
+h2{font-size:20px;margin:0 0 6px}
+.sub{color:var(--mu);margin:0 0 16px;font-size:15px}
+.field{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.field label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin-bottom:7px}
+.field pre{margin:0;white-space:pre-wrap;word-break:break-word;font:inherit;font-size:15px;line-height:1.55}
+.copy{margin-top:11px;background:var(--acc);color:#04101f;border:0;border-radius:8px;padding:8px 15px;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.copy:hover{filter:brightness(1.08)}
+.copy.ok{background:var(--acc2)}
+.prop{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.prop h3{margin:0;padding:14px 16px;font-size:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.prop h3 small{color:var(--mu);font-weight:500;font-size:13px}
+.when{padding:12px 16px;color:var(--mu);font-size:13.5px;border-bottom:1px solid var(--line);background:#0d1626}
+.prop pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:inherit;font-size:15px;line-height:1.6}
+.prop .copy{margin:0 16px 16px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+nav a{color:var(--tx);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:7px 13px;font-size:14px;font-weight:600}
+nav a:hover{border-color:var(--acc)}
+a{color:var(--acc)}
+footer{padding:24px 0 46px;color:var(--mu);font-size:14px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+ <h1>Консоль Upwork — <span>профиль и отклики</span></h1>
+ <p class="lead">Всё готово. Нажми «Копировать» и вставь в нужное поле Upwork. В откликах замени <b>[Name]</b> на имя клиента и подставь детали его вакансии.</p>
+ <nav>
+  <a href="https://www.upwork.com/signup">Регистрация Upwork</a>
+  <a href="https://igor-dev-dgu5m087.agent.mira.tg">Портфолио</a>
+  <a href="https://igor-dev-demo-dgu5m087.agent.mira.tg">Живое демо</a>
+  <a href="https://github.com/ztfvpzz2ks-wq/igor-dev">GitHub</a>
+  <a href="#profile">Профиль</a>
+  <a href="#props">Отклики</a>
+ </nav>
+</div></header>
+
+<section class="sec" id="profile"><div class="wrap">
+ <h2>Профиль</h2>
+ <p class="sub">Порядок полей — как на странице Upwork.</p>
+
+ <div class="field"><label>Title</label><pre id="f-title"></pre><button class="copy" data-t="f-title">Копировать</button></div>
+ <div class="field"><label>Overview — первые 3 строки</label><pre id="f-first3"></pre><button class="copy" data-t="f-first3">Копировать</button></div>
+ <div class="field"><label>Full overview</label><pre id="f-overview"></pre><button class="copy" data-t="f-overview">Копировать</button></div>
+ <div class="field"><label>Skills</label><pre id="f-skills"></pre><button class="copy" data-t="f-skills">Копировать</button></div>
+ <div class="field"><label>Hourly rate</label><pre id="f-rate"></pre><button class="copy" data-t="f-rate">Копировать</button></div>
+ <div class="field"><label>Базовые поля</label><pre>Full name: Igor
+Country: Ukraine
+City: Odessa
+Timezone: Europe/Kiev (UTC+2/+3)
+Languages: Ukrainian, Russian, English
+Payment method: Payoneer или PayPal (обязательно для вывода)</pre><button class="copy" data-raw="1">Копировать</button></div>
+</div></section>
+
+<section class="sec" id="props"><div class="wrap">
+ <h2>Отклики</h2>
+ <p class="sub">Выбери подходящий под вакансию. Один отклик — одна вакансия. Лучше 5 сильных, чем 20 шаблонных.</p>
+ <div id="list"></div>
+</div></section>
+
+<footer><div class="wrap">
+ Правила отправки и частота — в репозитории: <a href="https://github.com/ztfvpzz2ks-wq/igor-dev/blob/main/upwork/outreach-rules.md">upwork/outreach-rules.md</a>
+</div></footer>
+
+<script>
+const PROFILE = {"title": "Telegram Bots, Python Automation & Landing Pages — Clean Code You Own", "first3": "Developer building Telegram bots, price parsers and admin panels in Python.\nEvery project ships with the source code and a README — no black boxes, no lock-in.\nFixed price agreed before I start. I reply the same day.", "skills": "Python, Telegram Bot API, Automation, Web Scraping, REST API, JSON, HTML, CSS, JavaScript, SQLite, Linux, Nginx, Systemd, Data Export, CSV, Webhook, Bot, Admin Panel, Landing Page, Code Documentation", "rate": "20", "overview": "I am a Python developer building automation that people actually use every day:\nTelegram bots that capture leads, parsers that watch prices, small web panels\nthat replace a messy spreadsheet, and landing pages that turn traffic into requests.\n\nWHAT I WORK WITH\n- Python 3 (standard library first — most of my projects need zero pip installs)\n- Telegram Bot API, webhooks and polling, multilingual input (RU/UA/EN)\n- JSON/CSV storage, SQLite when the data actually calls for it\n- Plain HTML/CSS/JS for landing pages and admin panels\n- Linux VPS, systemd, nginx, cron, auto-restart\n\nHOW I WORK\n1. You describe the task in your own words — no technical brief needed.\n2. I reply with a fixed price and a real deadline, before anything starts.\n3. You get the working code, a README and setup instructions.\n4. 50% upfront, 50% on delivery. One revision round included, plus a week of support.\n\nWHAT I AM CAREFUL ABOUT\n- I do not lock you in. The source is yours from the start and, in most cases, public.\n- I do not take work I cannot finish. If your task needs a bigger stack than a script, I will say so and offer a smaller, honest version.\n- I quote a fixed price and it does not move afterwards.\n\nSELECTED WORK — all public, you can click and read the code\n- Live demo (works in your browser, no install): https://igor-dev-demo-dgu5m087.agent.mira.tg\n- Telegram lead bot with web admin panel — search, statuses, CSV export, RU/UA input\n- Crypto price parser bot — 7 exchanges, configurable threshold, Telegram alerts\n- Services and prices: https://igor-dev-en-services-dgu5m087.agent.mira.tg\n- Source code: https://github.com/ztfvpzz2ks-wq/igor-dev\n\nYou can try the demo before writing to anyone — it is a real bot and a real admin\npanel running in the browser. Type a request in Ukrainian or Russian and watch it\nget filed, categorised and assigned a status."};
+const ITEMS = [{"id": "proposal-1-telegram-bot", "title": "Отклик 1 — Telegram-бот", "when": "вакансия ищет бота, который принимает заявки, отвечает клиентам, ведёт базу, парсит сообщения, делает рассылки, работает с заказами.", "text": "Hi [Name],\n\nI build exactly this — Telegram bots that take requests in free form and turn them into a structured list, instead of another form nobody fills in.\n\nThe version I built most recently does this: a client writes \"need a bot for appointments, telegram @ivan\" and the bot itself works out that it is a bot request, pulls out the contact, files it, and notifies the owner right away. On top of that there is a small web panel — list, search, filter by status, change status inline, export to CSV. Pure Python standard library, so there is nothing to install and no database server to pay for.\n\nThe code is public, so you can judge it before we start:\nhttps://github.com/ztfvpzz2ks-wq/igor-dev/tree/main/case5_admin_panel\n\nIt handles Ukrainian and Russian input, including Ukrainian letters (і, ї, є, ґ), which matters if your customers write that way.\n\nTwo questions so I can quote you the right number:\n1. Do you want the bot to only collect requests, or also reply to the customer automatically?\n2. Do you need the web panel, or is a spreadsheet of requests enough?\n\nI can send you a working demo of the flow before we agree anything, so you can judge the result and not just the description.\n\n[Name], what would be the deadline on your side?\n\nIgor\nTelegram: https://t.me/mira?start=ref_7409753745"}, {"id": "proposal-2-price-parser", "title": "Отклик 2 — парсер цен", "when": "вакансия про scraping цен, мониторинг сайта, отслеживание изменений, уведомления, алерты, парсинг API.", "text": "Hi [Name],\n\nI have already built the thing you are describing, so let me be specific rather than theoretical.\n\nA Python script that watches a price across seven exchanges — Coinbase, Kraken, CoinGecko, Gemini, Gate.io, OKX, Bitfinex — and sends you a Telegram alert when the move passes your threshold. The tricky part is that every exchange nests its price data differently; that part is already solved. Your threshold, your source, your polling interval. State survives a restart, and there is a supervisor script that brings it back if it dies.\n\nCode is public: https://github.com/ztfvpzz2ks-wq/igor-dev/tree/main/case4_price_parser\n\nIf your case is not crypto — a product price on a site, a rate, an auction bid — the same structure works, I just add the source adapter.\n\nTwo things that change the price:\n1. How many sources do you need, and are they JSON APIs or HTML pages?\n2. Do you want a Telegram alert only, or also a history file / CSV of every change?\n\nI can send a working demo on your own source before we start, so you are buying a result, not a promise.\n\n[Name], what is the source URL you want it to watch?\n\nIgor\nTelegram: https://t.me/mira?start=ref_7409753745"}, {"id": "proposal-3-landing-page", "title": "Отклик 3 — лендинг", "when": "вакансия про landing page, promo page, small business site, one-page site, responsive page with a form.", "text": "Hi [Name],\n\nSmall, fast, one page that actually explains the offer and gets you requests — that is the whole job, and I do it well.\n\nA landing page I built for a service: clear headline, three blocks with what is included and the price, a four-step \"how it works\", a short FAQ, and two ways to make contact. Dark theme, responsive, no framework, no build step — it loads instantly on a phone, which matters when most of your traffic is mobile.\n\nLive example: https://igor-dev-en-services-dgu5m087.agent.mira.tg\n\nYou get the source files, and I can publish it on your hosting or on GitHub Pages — your choice. I also do the small things people forget: a real <title> and description, an OG image for link previews, and a form that actually sends the request somewhere (Telegram, email, or a simple endpoint).\n\nTwo questions:\n1. Do you have a logo and colours, or should I design a clean default look?\n2. Where should the form deliver requests — Telegram, email, or your CRM?\n\nI can put a first version up for you to look at within a day, and revise from there.\n\n[Name], what is the product or service the page is for?\n\nIgor\nTelegram: https://t.me/mira?start=ref_7409753745"}, {"id": "proposal-4-automation", "title": "Отклик 4 — автоматизация", "when": "вакансия про автоматизацию ручной работы, скрипты, выгрузки, отчёты, обработку файлов, работу с API, Excel/CSV, перенос данных.", "text": "Hi [Name],\n\nThis is my main kind of work: take a task someone does by hand every week and turn it into a script that does it in one click.\n\nA few of the things I have shipped:\n- a price parser that pulls live prices from seven exchanges and writes the result to Telegram and a state file\n- a lead tracker that takes free-form Telegram messages, works out what each one is about, and files it for you\n- a script that normalises messy exports from different systems into one clean CSV with a status column and a working search\n\nEverything is Python, and I prefer the standard library — most of these scripts need nothing installed and deploy to any small VPS in about a minute, with a systemd service for auto-restart. You get the code and a README that explains every setting, so you are not stuck with me.\n\nTwo questions:\n1. What exactly is the manual step you want removed, and how often do you do it?\n2. Where should the script run — your computer, a VPS, or on a schedule?\n\nSend me one example of the input and the output you want, and I will tell you honestly whether this is a two-hour job or a two-day one. If it turns out your task does not need a script, I will tell you that too.\n\n[Name], what is the first task you would like to hand over?\n\nIgor\nTelegram: https://t.me/mira?start=ref_7409753745"}, {"id": "proposal-5-general", "title": "Отклик 5 — общий", "when": "вакансия не подошла под кейсы 1–4: смешанная задача, рефакторинг, нестандартный стек, или ты пока не понимаешь, что именно нужно клиенту.", "text": "Hi [Name],\n\nYour post mentions [specific thing from the job description] — that part I can take on directly.\n\nFor context on how I work: I am a Python developer and my main projects are Telegram bots with admin panels, price parsers with alerts, and landing pages. Every one of them is in a public GitHub repo, so you can read the code and judge the quality before you commit to anything:\nhttps://github.com/ztfvpzz2ks-wq/igor-dev\n\nI would rather ask two good questions than send you a wrong estimate. So:\n1. What does \"done\" look like for you — what can you show the client or the boss at the end?\n2. Is there something that already exists that I should look at first (a repo, a doc, an existing script)?\n\nAfter that I reply with a fixed price and a real deadline, before anything is built. 50% upfront, 50% on acceptance, source code and README included. If your task turns out to need a bigger stack than a script, I will say so and offer the smallest version that actually solves it.\n\n[Name], happy to start with a small paid piece of it, so you can see how I work before committing the rest.\n\nIgor\nTelegram: https://t.me/mira?start=ref_7409753745"}];
+document.getElementById('f-title').textContent=PROFILE.title;
+document.getElementById('f-first3').textContent=PROFILE.first3;
+document.getElementById('f-overview').textContent=PROFILE.overview;
+document.getElementById('f-skills').textContent=PROFILE.skills;
+document.getElementById('f-rate').textContent=PROFILE.rate;
+
+const list=document.getElementById('list');
+list.innerHTML=ITEMS.map((it,i)=>`<div class="prop"><h3>${it.title}<small>когда применять</small></h3><div class="when">${it.when}</div><pre id="p${i}"></pre><button class="copy" data-t="p${i}">Копировать отклик</button></div>`).join('');
+ITEMS.forEach((it,i)=>document.getElementById('p'+i).textContent=it.text);
+
+document.querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{
+ let txt;
+ if(b.dataset.raw) txt=b.parentElement.querySelector('pre').textContent;
+ else txt=document.getElementById(b.dataset.t).textContent;
+ try{await navigator.clipboard.writeText(txt)}
+ catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove()}
+ const old=b.textContent;b.textContent='Скопировано ✓';b.classList.add('ok');
+ setTimeout(()=>{b.textContent=old;b.classList.remove('ok')},1600);
+});
+</script>
+</body></html>
